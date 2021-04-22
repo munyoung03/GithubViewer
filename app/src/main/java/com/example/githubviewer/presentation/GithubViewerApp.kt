@@ -1,4 +1,4 @@
-package com.example.githubviewer.presentation.di
+package com.example.githubviewer.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
