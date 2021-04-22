@@ -4,5 +4,5 @@ import com.example.githubviewer.data.model.Users
 import com.example.githubviewer.domain.repository.UsersRepository
 
 class GetUsersUseCase(private val usersRepository: UsersRepository) {
-    suspend fun execute(users: Users)=usersRepository.getUsers()
+    suspend fun execute()= usersRepository.getUsers()
 }

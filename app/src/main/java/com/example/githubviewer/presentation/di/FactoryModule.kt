@@ -16,11 +16,9 @@ class FactoryModule {
     @Singleton
     @Provides
     fun provideGithubViewModelFactory(
-        application:Application,
         getUsersUseCase: GetUsersUseCase
     ):GithubViewModelFactory{
       return GithubViewModelFactory(
-          application,
           getUsersUseCase
       )
     }

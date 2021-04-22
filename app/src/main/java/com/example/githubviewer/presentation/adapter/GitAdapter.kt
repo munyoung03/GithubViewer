@@ -45,6 +45,7 @@ class GitAdapter : RecyclerView.Adapter<GitAdapter.GitViewHolder>() {
     ):RecyclerView.ViewHolder(binding.root){
         fun bind(user: UsersItem){
             binding.userName.text = user.login
+
             Glide.with(binding.userIcon.context).
             load(user.avatar_url).
             into(binding.userIcon)
