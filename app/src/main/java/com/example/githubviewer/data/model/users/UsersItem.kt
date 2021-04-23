@@ -1,4 +1,10 @@
-package com.example.githubviewer.data.model
+package com.example.githubviewer.data.model.users
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.io.Serializable
+
+@Entity(tableName = "user")
 
 data class UsersItem(
     val avatar_url: String,
@@ -8,6 +14,7 @@ data class UsersItem(
     val gists_url: String,
     val gravatar_id: String,
     val html_url: String,
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val login: String,
     val node_id: String,
@@ -19,4 +26,4 @@ data class UsersItem(
     val subscriptions_url: String,
     val type: String,
     val url: String
-)
+):Serializable

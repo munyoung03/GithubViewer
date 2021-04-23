@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubviewer.data.util.Resource
 import com.example.githubviewer.databinding.FragmentUsersBinding
@@ -32,7 +33,15 @@ class UsersFragment : Fragment() {
         binding = FragmentUsersBinding.bind(view)
         viewModel = (activity as MainActivity).viewModel
         gitAdapter = (activity as MainActivity).adapter
-
+        gitAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("selected", it)
+            }
+            findNavController().navigate(
+                R.id.action_usersFragment_to_infoFragment,
+                bundle
+            )
+        }
         initRecyclerView()
         getUserList()
     }

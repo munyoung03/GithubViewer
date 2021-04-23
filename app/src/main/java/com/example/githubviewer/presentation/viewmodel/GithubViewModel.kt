@@ -1,22 +1,20 @@
 package com.example.githubviewer.presentation.viewmodel
 
-import android.app.Application
-import android.view.View
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubviewer.data.api.GithubAPIService
-import com.example.githubviewer.data.model.Users
-import com.example.githubviewer.data.model.UsersItem
+import com.example.githubviewer.data.model.search.Search
+import com.example.githubviewer.data.model.users.Users
 import com.example.githubviewer.data.util.Resource
+import com.example.githubviewer.domain.usecase.GetSearchUseCase
 import com.example.githubviewer.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class GithubViewModel(
-    private val getUsersUseCase: GetUsersUseCase
+    private val getUsersUseCase: GetUsersUseCase,
+    private val getSearchUseCase: GetSearchUseCase
 ) : ViewModel() {
 
     val usersLists: MutableLiveData<Resource<Users>> = MutableLiveData()
@@ -29,6 +27,17 @@ class GithubViewModel(
             usersLists.postValue(apiResult)
         }catch (e:Exception){
             usersLists.postValue(Resource.Error(e.toString()))
+        }
+    }
+
+    val searchLists: MutableLiveData<Resource<Search>> = MutableLiveData()
+
+    fun getSearchList() = viewModelScope.launch(Dispatchers.IO) {
+        searchLists.postValue(Resource.Loading())
+
+        try {
+            val apiResult = getSearchUseCase.execute()
+            
         }
     }
  }

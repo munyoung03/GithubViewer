@@ -1,6 +1,7 @@
 package com.example.githubviewer.presentation.di
 
 import com.example.githubviewer.domain.repository.UsersRepository
+import com.example.githubviewer.domain.usecase.GetSearchUseCase
 import com.example.githubviewer.domain.usecase.GetUsersUseCase
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,13 @@ class UseCaseModule {
         usersRepository: UsersRepository
     ):GetUsersUseCase{
         return GetUsersUseCase(usersRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetSearchUseCase(
+        usersRepository: UsersRepository
+    ):GetSearchUseCase{
+        return GetSearchUseCase(usersRepository)
     }
 }

@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubviewer.data.model.Users
-import com.example.githubviewer.data.model.UsersItem
+import com.example.githubviewer.data.model.users.UsersItem
 import com.example.githubviewer.databinding.UserItemBinding
 
 class GitAdapter : RecyclerView.Adapter<GitAdapter.GitViewHolder>() {
@@ -50,7 +49,15 @@ class GitAdapter : RecyclerView.Adapter<GitAdapter.GitViewHolder>() {
             load(user.avatar_url).
             into(binding.userIcon)
 
-
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(user)
+            }
         }
+    }
+
+    private var onItemClickListener: ((UsersItem) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (UsersItem) -> Unit){
+        onItemClickListener = listener
     }
 }
