@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubviewer.data.util.Resource
@@ -42,6 +43,20 @@ class UsersFragment : Fragment() {
                 bundle
             )
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    getSearchList(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
         initRecyclerView()
         getUserList()
     }
@@ -60,6 +75,18 @@ class UsersFragment : Fragment() {
                 is Resource.Success -> {
                     Log.d("TAG" ,"data : ${response.data}")
                     gitAdapter.differ.submitList(response.data)
+                }
+            }
+        })
+    }
+
+    private fun getSearchList(q:String){
+        viewModel.getSearchList(q)
+        viewModel.searchLists.observe(viewLifecycleOwner, { response ->
+            when(response){
+                is Resource.Success -> {
+                    Log.d("TAG", "data : ${response.data}")
+                    gitAdapter.differ.submitList(response.data?.items)
                 }
             }
         })

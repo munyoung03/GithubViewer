@@ -32,12 +32,14 @@ class GithubViewModel(
 
     val searchLists: MutableLiveData<Resource<Search>> = MutableLiveData()
 
-    fun getSearchList() = viewModelScope.launch(Dispatchers.IO) {
+    fun getSearchList(q:String) = viewModelScope.launch(Dispatchers.IO) {
         searchLists.postValue(Resource.Loading())
 
         try {
-            val apiResult = getSearchUseCase.execute()
-            
+            val apiResult = getSearchUseCase.execute(q)
+            searchLists.postValue(apiResult)
+        }catch (e:Exception){
+            searchLists.postValue(Resource.Error(e.toString()))
         }
     }
  }
