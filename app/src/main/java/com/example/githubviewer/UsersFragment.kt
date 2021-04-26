@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubviewer.data.model.users.UsersItem
 import com.example.githubviewer.data.util.Resource
 import com.example.githubviewer.databinding.FragmentUsersBinding
 import com.example.githubviewer.presentation.adapter.GitAdapter
@@ -43,6 +45,12 @@ class UsersFragment : Fragment() {
                 bundle
             )
         }
+
+        gitAdapter.setOnItemSaveClickListener {
+            saveUser(it)
+            Toast.makeText(context, "저장완료", Toast.LENGTH_SHORT).show()
+        }
+
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -90,6 +98,10 @@ class UsersFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun saveUser(usersItem: UsersItem){
+        viewModel.saveUser(usersItem)
     }
 
 }

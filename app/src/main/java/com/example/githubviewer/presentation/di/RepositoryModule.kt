@@ -1,6 +1,7 @@
 package com.example.githubviewer.presentation.di
 
 import com.example.githubviewer.data.repository.UsersRepositoryImpl
+import com.example.githubviewer.data.repository.datasource.UserLocalDataSource
 import com.example.githubviewer.data.repository.datasource.UserRemoteDataSource
 import com.example.githubviewer.domain.repository.UsersRepository
 import dagger.Module
@@ -16,8 +17,9 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideUsersRepository(
-        userRemoteDataSource: UserRemoteDataSource
+        userRemoteDataSource: UserRemoteDataSource,
+        userLocalDataSource: UserLocalDataSource
     ):UsersRepository{
-        return UsersRepositoryImpl(userRemoteDataSource)
+        return UsersRepositoryImpl(userRemoteDataSource, userLocalDataSource)
     }
 }

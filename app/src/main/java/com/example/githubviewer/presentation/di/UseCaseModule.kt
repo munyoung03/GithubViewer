@@ -1,8 +1,7 @@
 package com.example.githubviewer.presentation.di
 
 import com.example.githubviewer.domain.repository.UsersRepository
-import com.example.githubviewer.domain.usecase.GetSearchUseCase
-import com.example.githubviewer.domain.usecase.GetUsersUseCase
+import com.example.githubviewer.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +26,29 @@ class UseCaseModule {
         usersRepository: UsersRepository
     ):GetSearchUseCase{
         return GetSearchUseCase(usersRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserUseCase(
+        usersRepository: UsersRepository
+    ):GetUserUseCase{
+        return GetUserUseCase(usersRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveUserUseCase(
+        usersRepository: UsersRepository
+    ):SaveUserUseCase{
+        return SaveUserUseCase(usersRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteUserUseCase(
+        usersRepository: UsersRepository
+    ):DeleteUserUseCase{
+        return DeleteUserUseCase(usersRepository)
     }
 }

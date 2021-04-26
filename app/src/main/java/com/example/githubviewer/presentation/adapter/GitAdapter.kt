@@ -52,12 +52,21 @@ class GitAdapter : RecyclerView.Adapter<GitAdapter.GitViewHolder>() {
             binding.root.setOnClickListener {
                 onItemClickListener?.invoke(user)
             }
+
+            binding.userStar.setOnClickListener {
+                onItemSaveClickListener?.invoke(user)
+            }
         }
     }
 
     private var onItemClickListener: ((UsersItem) -> Unit)? = null
+    private var onItemSaveClickListener: ((UsersItem) -> Unit)? = null
 
     fun setOnItemClickListener(listener: (UsersItem) -> Unit){
         onItemClickListener = listener
+    }
+
+    fun setOnItemSaveClickListener(listener: (UsersItem) -> Unit){
+        onItemSaveClickListener = listener
     }
 }

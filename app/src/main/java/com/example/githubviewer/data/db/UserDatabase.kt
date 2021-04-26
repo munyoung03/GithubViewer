@@ -12,5 +12,5 @@ import com.example.githubviewer.data.model.users.UsersItem
 )
 
 abstract class UserDatabase: RoomDatabase(){
-
+    abstract fun getUserDAO():UserDAO
 }
