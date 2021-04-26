@@ -2,19 +2,24 @@ package com.example.githubviewer.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.githubviewer.data.model.search.Search
 import com.example.githubviewer.data.model.users.Users
+import com.example.githubviewer.data.model.users.UsersItem
 import com.example.githubviewer.data.util.Resource
-import com.example.githubviewer.domain.usecase.GetSearchUseCase
-import com.example.githubviewer.domain.usecase.GetUsersUseCase
+import com.example.githubviewer.domain.usecase.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class GithubViewModel(
     private val getUsersUseCase: GetUsersUseCase,
-    private val getSearchUseCase: GetSearchUseCase
+    private val getSearchUseCase: GetSearchUseCase,
+    private val getUserUseCase: GetUserUseCase,
+    private val saveUserUseCase: SaveUserUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 ) : ViewModel() {
 
     val usersLists: MutableLiveData<Resource<Users>> = MutableLiveData()
@@ -41,5 +46,19 @@ class GithubViewModel(
         }catch (e:Exception){
             searchLists.postValue(Resource.Error(e.toString()))
         }
+    }
+
+    fun getLocalUserList() = liveData {
+        getUserUseCase.execute().collect {
+            emit(it)
+        }
+    }
+
+    fun saveUser(usersItem: UsersItem) = viewModelScope.launch {
+        saveUserUseCase.execute(usersItem)
+    }
+
+    fun deleteUser(usersItem: UsersItem) = viewModelScope.launch {
+        deleteUserUseCase.execute(usersItem)
     }
  }

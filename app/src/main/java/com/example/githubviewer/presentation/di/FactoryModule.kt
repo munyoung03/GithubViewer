@@ -1,8 +1,7 @@
 package com.example.githubviewer.presentation.di
 
 import android.app.Application
-import com.example.githubviewer.domain.usecase.GetSearchUseCase
-import com.example.githubviewer.domain.usecase.GetUsersUseCase
+import com.example.githubviewer.domain.usecase.*
 import com.example.githubviewer.presentation.viewmodel.GithubViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -18,11 +17,17 @@ class FactoryModule {
     @Provides
     fun provideGithubViewModelFactory(
         getUsersUseCase: GetUsersUseCase,
-        getSearchUseCase: GetSearchUseCase
+        getSearchUseCase: GetSearchUseCase,
+        getUserUseCase: GetUserUseCase,
+        saveUserUseCase: SaveUserUseCase,
+        deleteUserUseCase: DeleteUserUseCase
     ):GithubViewModelFactory{
       return GithubViewModelFactory(
           getUsersUseCase,
-          getSearchUseCase
+          getSearchUseCase,
+          getUserUseCase,
+          saveUserUseCase,
+          deleteUserUseCase
       )
     }
 }
